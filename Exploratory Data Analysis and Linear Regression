@@ -1,0 +1,51 @@
+#For this code the run, numpy,pandas, and matplot must be imported
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split  # Add this import statement
+
+#The dataset used
+data = pd.DataFrame({
+    'Feature': np.arange(1, 11),
+    'Target': [2, 4, 5, 7, 8, 10, 11, 13, 14, 16]
+})
+
+# Save the dataset to a CSV file
+data.to_csv('data.csv', index=False)
+# Extract the features and target variable
+X = data['Feature'].values.reshape(-1, 1)
+y = data['Target'].values
+
+# Split the data into training and testing sets
+# Adjust the test_size and random_state as per your requirements
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Plot the data points
+plt.scatter(X, y, color='blue', label='Data Points')
+
+# Add labels and title
+plt.xlabel('Feature')
+plt.ylabel('Target')
+plt.title('Scatter Plot of Data')
+
+# Display the plot
+plt.show()
+# Create and train the linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict the target variable for the test set
+y_pred = model.predict(X_test)
+
+# Plot the regression line
+plt.scatter(X, y, color='blue', label='Data Points')
+plt.plot(X_test, y_pred, color='red', linewidth=2, label='Regression Line')
+
+# Add labels and title
+plt.xlabel('Feature')
+plt.ylabel('Target')
+plt.title('Linear Regression')
+
+# Display the plot
+plt.legend()
+plt.show()
